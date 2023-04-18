@@ -30,9 +30,9 @@ chap_courant = st.selectbox('Choisir le chap actuel', (k for k in sommaire.keys(
 #st.write(sommaire[chap_courant][1])
 st.markdown(f"Ce chapitre contient {sommaire[chap_courant][1]+1-sommaire[chap_courant][0]} questions")
 nb_question_dans_chap_courant = sommaire[chap_courant][1]+1-sommaire[chap_courant][0]
-question_chap_courant_max = st.slider('Progression dans le chapitre', 0, nb_question_dans_chap_courant,1)
-nb_question_courant = st.number_input('Nombre de questions à poser sur le chapitre actuel',min_value = 1,max_value=nb_question_dans_chap_courant,value=1)
-nb_question = st.number_input('Nombre de questions sur le passé',min_value = 1,max_value=sommaire[chap_courant][1],value=1)
+question_chap_courant_max = st.slider('Progression dans le chapitre', 0, nb_question_dans_chap_courant,nb_question_dans_chap_courant//2)
+nb_question_courant = st.slider('Nombre de questions à poser sur le chapitre actuel',min_value = 1,max_value=nb_question_dans_chap_courant,value=2)
+nb_question = st.number_input('Nombre de questions sur le passé',min_value = 1,max_value=sommaire[chap_courant][1]-(nb_question_dans_chap_courant-question_chap_courant_max),value=1)
 
 st.markdown("## Roulette de questions actuelles")
 # Calcul des index des questions corrspondant au début et fin du chapitre sélectionné
