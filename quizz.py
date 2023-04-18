@@ -25,16 +25,16 @@ df = load_data(st.secrets["public_gsheets_url"])
 df.index = df.index.astype(int)
 sommaire = creation_sommaire(df)
 st.markdown(f"# Réglages")
-chap_courant = st.selectbox('Choisir le chap actuel', (k for k in sommaire.keys()))
+chap_courant = st.selectbox("Choisir le chapitre en cours d'apprentissage", (k for k in sommaire.keys()))
 #st.write(chap_courant)
 #st.write(sommaire[chap_courant][1])
-st.markdown(f"Ce chapitre contient {sommaire[chap_courant][1]+1-sommaire[chap_courant][0]} questions")
+st.markdown(f"Ce chapitre contient :red[{sommaire[chap_courant][1]+1-sommaire[chap_courant][0]}] questions")
 nb_question_dans_chap_courant = sommaire[chap_courant][1]+1-sommaire[chap_courant][0]
 question_chap_courant_max = st.slider('Progression dans le chapitre', 0, nb_question_dans_chap_courant,nb_question_dans_chap_courant//2)
-nb_question_courant = st.slider('Nombre de questions à poser sur le chapitre actuel',min_value = 1,max_value=nb_question_dans_chap_courant,value=2)
+nb_question_courant = st.slider('Nombre de questions à poser sur le chapitre en cours',min_value = 1,max_value=question_chap_courant_max,value=2)
 nb_question = st.number_input('Nombre de questions sur le passé',min_value = 1,max_value=sommaire[chap_courant][1]-(nb_question_dans_chap_courant-question_chap_courant_max),value=1)
 
-st.markdown("## Roulette de questions actuelles")
+st.markdown("## Questions sur la leçon")
 # Calcul des index des questions corrspondant au début et fin du chapitre sélectionné
 start_index = sommaire[chap_courant][0]
 end_index = sommaire[chap_courant][1]
@@ -54,7 +54,7 @@ for row in resultat_courant.itertuples():
 #    st.markdown(f" {row['Question']} ")
 
 
-st.markdown("## Roulette de questions sur les chapitres passés")
+st.markdown("## Questions depuis le début")
 
 
 for row in resultat.itertuples():
